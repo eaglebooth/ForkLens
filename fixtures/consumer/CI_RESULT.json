@@ -1,0 +1,1 @@
+{"fixture":"synthetic","workflow":"forklens-regression","conclusion":"success","required_test":"fixtures/consumer/tests/adapter-regression.test.ts","claim_boundary":"This fixture demonstrates the contract evidence topology; it is not an independently hosted CI authority or production deployment proof."}
