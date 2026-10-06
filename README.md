@@ -33,3 +33,5 @@ npm run build
 ```
 
 StudioNet deployment: [`0x81066BDd259507f1bba56579864AD8cef6aB63dD`](https://explorer-studio.genlayer.com/address/0x81066BDd259507f1bba56579864AD8cef6aB63dD).
+
+The finalized two-wallet lifecycle is documented in [`docs/LIVE_STUDIONET_EVIDENCE.md`](docs/LIVE_STUDIONET_EVIDENCE.md): 16 finalized transactions and 24 passing assertions covering exact compatible activation, report-only failure, wrong actor, wrong digest and replay with authoritative readback.
