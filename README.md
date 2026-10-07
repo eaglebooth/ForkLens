@@ -1,29 +1,31 @@
-# ForkLens
+# ForkLens v2
 
-ForkLens is a GenLayer dependency-upgrade acceptance gate. It verifies whether a Web3 consumer actually changed production code and regression coverage for an exact dependency revision before allowing that revision to become active.
+ForkLens is a GenLayer dependency-upgrade gate. It permits a consumer revision to become active only when authoritative GitHub data proves that an exact dependency upgrade is accompanied by changed production code, changed regression tests, and a successful check run bound to the exact consumer head.
 
 ## Why GenLayer
 
-Deterministic logic binds repository identities, full commit SHAs, required evidence slots, candidate epoch and single-use activation. Validators then judge the semantic relationship between the dependency breaking change, consumer remediation and regression evidence. Removing semantic consensus would reduce the product to a file-presence checker.
+Deterministic contract logic fetches and binds GitHub compare responses, changed paths, exact commit identities, and exact-head check runs. Only after these hard predicates pass do validators judge whether the consumer change semantically remediates the dependency change. Removing intelligent consensus would reduce the product to path and CI presence checks.
 
-## Authority and consequence
+## Trust boundary
 
-The deployer receives no administrator role. Any reviewer wallet may register a unique project namespace. That authenticated sender owns only its namespace. A `COMPATIBLE` verdict produces an exact attestation; `activate_candidate` consumes it and advances the project's active dependency and consumer revisions. Reports, missing evidence, stale CI and non-positive verdicts create no activation capability.
+- Repository identities are GitHub `owner/repo` slugs, and dependency and consumer repositories must differ.
+- Base and head are full 40-character commit SHAs returned by GitHub's API.
+- Production and regression paths must occur in the consumer's actual changed-file set.
+- At least one completed, successful GitHub check run from an identified GitHub App must target the exact consumer head.
+- A user-authored report, URL, digest, fixture, screenshot, or claim is never accepted as implementation or CI proof.
+- GitHub source failure, missing paths, missing CI, semantic ambiguity, or validator disagreement fails closed.
+- A compatible verdict creates a revision-bound, epoch-bound, single-use attestation. Only the project owner may activate it.
+- The deployer has no administrator or testing role.
 
 ## Workflow
 
-1. Register a project and its current revisions.
-2. Open a candidate for exact dependency and consumer targets.
-3. Fill four typed, commit-bound evidence slots.
-4. Seal the immutable packet.
-5. Trigger semantic compatibility review from any wallet.
-6. Project owner consumes the exact attestation once.
+1. Register distinct dependency and consumer GitHub repositories with their active commits.
+2. Open a candidate with exact base/head pairs and required production/test paths.
+3. Any wallet calls `assess_candidate`.
+4. Validators independently fetch GitHub compare and check-run APIs, enforce deterministic predicates, then perform semantic review.
+5. The project owner consumes the exact attestation once to advance active revisions.
 
-## Proof boundary
-
-ForkLens demonstrates revision-bound source review and on-chain activation state. A synthetic fixture must be labelled synthetic. Source or test evidence does not prove a production deployment occurred, and ForkLens does not claim to deploy the reviewed software.
-
-## Verify
+## Verification
 
 ```powershell
 python -m pytest -q -p no:cacheprovider
@@ -32,6 +34,8 @@ npm run lint
 npm run build
 ```
 
-StudioNet deployment: [`0x81066BDd259507f1bba56579864AD8cef6aB63dD`](https://explorer-studio.genlayer.com/address/0x81066BDd259507f1bba56579864AD8cef6aB63dD).
+Local tests use mocked GitHub responses only to exercise invariants; they are not submission evidence. Valid live evidence requires two independently hosted public repositories, real changed production/test files, and a real successful GitHub check on the exact consumer head. See [`docs/TEST_RESOURCE_MANIFEST.md`](docs/TEST_RESOURCE_MANIFEST.md).
 
-The finalized two-wallet lifecycle is documented in [`docs/LIVE_STUDIONET_EVIDENCE.md`](docs/LIVE_STUDIONET_EVIDENCE.md): 16 finalized transactions and 24 passing assertions covering exact compatible activation, report-only failure, wrong actor, wrong digest and replay with authoritative readback.
+## Deployment status
+
+ForkLens v2 is not yet deployed. The earlier v1 address and its fixture-derived run were invalidated and must not be submitted. See [`docs/DEPRECATED_V1_EVIDENCE.md`](docs/DEPRECATED_V1_EVIDENCE.md).

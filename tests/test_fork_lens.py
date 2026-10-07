@@ -1,79 +1,41 @@
-import json
-
-PROJECT="relay-sdk"; CANDIDATE=PROJECT+".upgrade-01"
-DB="1"*40; DT="2"*40; CB="3"*40; CT="4"*40; DIGEST="a"*64
-
-def bootstrap(deploy):
-    c=deploy("contracts/fork_lens.py")
-    c.register_project(PROJECT,"https://github.com/example/dependency","https://github.com/example/consumer",DB,CB)
-    c.open_candidate(CANDIDATE,PROJECT,DB,DT,CB,CT,"src/adapter.ts src/verifier.ts","tests/adapter.test.ts")
-    return c
-
-def add_required(c):
-    for kind,sha in (("DEPENDENCY_DIFF",DT),("CONSUMER_DIFF",CT),("REGRESSION_TESTS",CT),("CI_RESULT",CT)):
-        c.add_evidence(CANDIDATE,kind,f"https://raw.githubusercontent.com/example/repo/{sha}/{kind.lower()}.json",sha,DIGEST,"Exact commit-pinned evidence for compatibility review")
-
-def mock(vm,verdict="COMPATIBLE",issues=None,valid=True):
-    vm.mock_llm(r"Assess whether a Web3 consumer",json.dumps({"verdict":verdict,"issues":issues or [],"summary":"The exact implementation and regression evidence cover the dependency breaking change."}))
-    vm.mock_llm(r"Independently validate a dependency",json.dumps({"valid":valid}))
-
-def test_deployer_has_no_global_authority(direct_deploy,direct_vm,direct_alice):
-    c=direct_deploy("contracts/fork_lens.py")
-    with direct_vm.prank(direct_alice): c.register_project(PROJECT,"https://github.com/example/dependency","https://github.com/example/consumer",DB,CB)
-    assert json.loads(c.get_project(PROJECT))["owner"].endswith(bytes(direct_alice).hex())
-    with direct_vm.expect_revert("PROJECT_OWNER_REQUIRED"): c.open_candidate(CANDIDATE,PROJECT,DB,DT,CB,CT,"src/a.ts","tests/a.ts")
-
-def test_happy_path_attests_and_activates(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);add_required(c);c.seal_candidate(CANDIDATE);mock(direct_vm)
-    assert c.assess_candidate(CANDIDATE)=="COMPATIBLE"
-    x=json.loads(c.get_candidate(CANDIDATE));assert x["status"]=="ATTESTED" and x["attestation_digest"]
-    c.activate_candidate(CANDIDATE,x["attestation_digest"])
-    p=json.loads(c.get_project(PROJECT));x=json.loads(c.get_candidate(CANDIDATE))
-    assert p["active_dependency"]==DT and p["active_consumer"]==CT and p["epoch"]==2 and x["status"]=="ACTIVATED"
-
-def test_required_evidence_cannot_be_replaced_by_report(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy)
-    c.add_evidence(CANDIDATE,"MIGRATION_NOTE","https://github.com/example/consumer/blob/main/MIGRATION.md",CT,DIGEST,"Author migration report")
-    with direct_vm.expect_revert("REQUIRED_EVIDENCE_MISSING"): c.seal_candidate(CANDIDATE)
-
-def test_missing_required_slot_rejects_seal(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy)
-    with direct_vm.expect_revert("REQUIRED_EVIDENCE_MISSING"): c.seal_candidate(CANDIDATE)
-
-def test_wrong_commit_evidence_rolls_back(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);before=json.loads(c.get_candidate(CANDIDATE))
-    with direct_vm.expect_revert("EVIDENCE_REVISION_MISMATCH"):
-        c.add_evidence(CANDIDATE,"CI_RESULT",f"https://example.com/{CB}/ci.json",CB,DIGEST,"CI for stale commit")
-    assert json.loads(c.get_candidate(CANDIDATE))==before
-
-def test_duplicate_slot_is_rejected_without_mutation(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);url=f"https://raw.githubusercontent.com/example/dependency/{DT}/diff.json"
-    c.add_evidence(CANDIDATE,"DEPENDENCY_DIFF",url,DT,DIGEST,"Dependency diff")
-    before=json.loads(c.get_candidate(CANDIDATE))
-    with direct_vm.expect_revert("EVIDENCE_SLOT_ALREADY_FILLED"): c.add_evidence(CANDIDATE,"DEPENDENCY_DIFF",url,DT,DIGEST,"Duplicate")
-    assert json.loads(c.get_candidate(CANDIDATE))==before
-
-def test_semantic_non_positive_never_creates_attestation(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);add_required(c);c.seal_candidate(CANDIDATE);mock(direct_vm,"INCOMPATIBLE",["AUTH_DOMAIN_NOT_BOUND"])
-    assert c.assess_candidate(CANDIDATE)=="INCOMPATIBLE"
-    x=json.loads(c.get_candidate(CANDIDATE));assert x["status"]=="BLOCKED" and not x["attestation_digest"]
-
-def test_malformed_consensus_fails_closed(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);add_required(c);c.seal_candidate(CANDIDATE)
-    direct_vm.mock_llm(r"Assess whether a Web3 consumer",'{"verdict":"COMPATIBLE","issues":["HIDDEN"]}')
-    direct_vm.mock_llm(r"Independently validate a dependency",'{"valid":true}')
-    assert c.assess_candidate(CANDIDATE)=="INSUFFICIENT_EVIDENCE"
-    assert json.loads(c.get_candidate(CANDIDATE))["status"]=="BLOCKED"
-
-def test_wrong_attestation_and_replay_preserve_state(direct_deploy,direct_vm):
-    c=bootstrap(direct_deploy);add_required(c);c.seal_candidate(CANDIDATE);mock(direct_vm);c.assess_candidate(CANDIDATE)
-    before=json.loads(c.get_candidate(CANDIDATE))
-    with direct_vm.expect_revert("ATTESTATION_BINDING_MISMATCH"): c.activate_candidate(CANDIDATE,"b"*64)
-    assert json.loads(c.get_candidate(CANDIDATE))==before
-    c.activate_candidate(CANDIDATE,before["attestation_digest"]);after=json.loads(c.get_candidate(CANDIDATE))
-    with direct_vm.expect_revert("ATTESTATION_NOT_AVAILABLE"): c.activate_candidate(CANDIDATE,before["attestation_digest"])
-    assert json.loads(c.get_candidate(CANDIDATE))==after
-
-def test_schema_and_runner_pin(direct_deploy):
-    c=direct_deploy("contracts/fork_lens.py");assert json.loads(c.get_contract_version())["schema"]=="semantic-dependency-upgrade-gate-v1"
-    assert open("contracts/fork_lens.py",encoding="utf-8").read().splitlines()[:2]==["# v0.2.16",'# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }']
+import hashlib,json
+P="relay-sdk";C=P+".upgrade";DB="1"*40;DT="2"*40;CB="3"*40;CT="4"*40;DEP="acme/dependency";CON="acme/consumer";PROD="src/adapter.ts";TEST="tests/adapter.test.ts"
+def canon(v):return json.dumps(v,ensure_ascii=True,sort_keys=True,separators=(",",":"))
+def cmp(base,head,files):return {"status":"ahead","base_commit":{"sha":base},"commits":[{"sha":head}],"files":[{"filename":p,"patch":x} for p,x in files]}
+def web(vm,prod=True,tests=True,ci=True,up=True,dependency_head=DT):
+ d=cmp(DB,dependency_head,[("CHANGELOG.md","- verify(message,sig)\n+ verify(domain,message,sig)")]);fs=[]
+ if prod:fs.append((PROD,"+ verifier(domain,message,signature)"))
+ if tests:fs.append((TEST,"+ assert domain bound"))
+ c=cmp(CB,CT,fs);r={"check_runs":[{"name":"regression","head_sha":CT,"status":"completed","conclusion":"success" if ci else "failure","app":{"slug":"github-actions"}}]};status=200 if up else 503
+ vm.mock_web(r"acme/dependency/compare",{"method":"GET","status":status,"body":json.dumps(d) if up else "down"});vm.mock_web(r"acme/consumer/compare",{"method":"GET","status":status,"body":json.dumps(c) if up else "down"});vm.mock_web(r"check-runs",{"method":"GET","status":status,"body":json.dumps(r) if up else "down"});return d,c,r
+def proof(d,c,r):
+ def norm(x,b,h):return {"ok":True,"base":b,"head":h,"changed":[f["filename"] for f in x["files"]],"patches":[{"path":f["filename"],"patch":f["patch"]} for f in x["files"]]}
+ dn,cn=norm(d,DB,DT),norm(c,CB,CT);run={"name":"regression","head_sha":CT,"status":"completed","conclusion":r["check_runs"][0]["conclusion"],"app":"github-actions"};ok=run["conclusion"]=="success"
+ f={"dependency_compare":dn,"consumer_compare":cn,"checks":{"ok":ok,"error":"" if ok else "NO_SUCCESSFUL_EXACT_HEAD_CHECK","runs":[run]},"production_paths":[PROD],"test_paths":[TEST]};f["production_changed"]=PROD in cn["changed"];f["tests_changed"]=TEST in cn["changed"];return hashlib.sha256(canon(f).encode()).hexdigest()
+def boot(deploy):
+ c=deploy("contracts/fork_lens.py");c.register_project(P,DEP,CON,DB,CB);c.open_candidate(C,P,DB,DT,CB,CT,PROD,TEST);return c
+def ai(vm,p,v="COMPATIBLE",issues=None):vm.mock_llm(r"Judge whether consumer",json.dumps({"verdict":v,"issues":issues or [],"summary":"Implementation and regression patches cover the dependency change.","proof_digest":p}));vm.mock_llm(r"Independently validate",'{"valid":true}')
+def test_schema_deployer_neutral(direct_deploy,direct_vm,direct_alice):
+ c=direct_deploy("contracts/fork_lens.py");assert json.loads(c.get_contract_version())["version"]==2
+ with direct_vm.prank(direct_alice):c.register_project(P,DEP,CON,DB,CB)
+ assert json.loads(c.get_project(P))["owner"].endswith(bytes(direct_alice).hex())
+def test_same_repo_rejected(direct_deploy,direct_vm):
+ c=direct_deploy("contracts/fork_lens.py")
+ with direct_vm.expect_revert("INVALID_PROJECT"):c.register_project(P,DEP,DEP,DB,CB)
+def test_authoritative_happy_path(direct_deploy,direct_vm):
+ c=boot(direct_deploy);d,x,r=web(direct_vm);p=proof(d,x,r);ai(direct_vm,p);assert c.assess_candidate(C)=="COMPATIBLE";a=json.loads(c.get_candidate(C));assert a["proof_digest"]==p;c.activate_candidate(C,a["attestation_digest"]);assert json.loads(c.get_project(P))["epoch"]==2
+def test_missing_ci_blocks(direct_deploy,direct_vm):c=boot(direct_deploy);web(direct_vm,ci=False);assert c.assess_candidate(C)=="INSUFFICIENT_EVIDENCE";assert json.loads(c.get_candidate(C))["status"]=="BLOCKED"
+def test_missing_production_blocks(direct_deploy,direct_vm):c=boot(direct_deploy);web(direct_vm,prod=False);assert c.assess_candidate(C)=="INSUFFICIENT_EVIDENCE"
+def test_missing_tests_blocks(direct_deploy,direct_vm):c=boot(direct_deploy);web(direct_vm,tests=False);assert c.assess_candidate(C)=="INSUFFICIENT_EVIDENCE"
+def test_unavailable_fails_closed(direct_deploy,direct_vm):c=boot(direct_deploy);web(direct_vm,up=False);assert c.assess_candidate(C)=="SOURCE_UNAVAILABLE";assert not json.loads(c.get_candidate(C))["attestation_digest"]
+def test_compare_head_mismatch_fails_closed(direct_deploy,direct_vm):
+ c=boot(direct_deploy);web(direct_vm,dependency_head="9"*40);assert c.assess_candidate(C)=="SOURCE_UNAVAILABLE"
+def test_semantic_conflict_blocks(direct_deploy,direct_vm):c=boot(direct_deploy);d,x,r=web(direct_vm);p=proof(d,x,r);ai(direct_vm,p,"INCOMPATIBLE",["DOMAIN_NOT_BOUND"]);assert c.assess_candidate(C)=="INCOMPATIBLE"
+def test_wrong_actor_digest_replay(direct_deploy,direct_vm,direct_alice):
+ c=boot(direct_deploy);d,x,r=web(direct_vm);ai(direct_vm,proof(d,x,r));c.assess_candidate(C);before=json.loads(c.get_candidate(C))
+ with direct_vm.prank(direct_alice),direct_vm.expect_revert("PROJECT_OWNER_REQUIRED"):c.activate_candidate(C,before["attestation_digest"])
+ with direct_vm.expect_revert("ATTESTATION_BINDING_MISMATCH"):c.activate_candidate(C,"f"*64)
+ assert json.loads(c.get_candidate(C))==before;c.activate_candidate(C,before["attestation_digest"]);after=json.loads(c.get_candidate(C))
+ with direct_vm.expect_revert("ATTESTATION_NOT_AVAILABLE"):c.activate_candidate(C,before["attestation_digest"])
+ assert json.loads(c.get_candidate(C))==after
+def test_runner_pin():assert open("contracts/fork_lens.py",encoding="utf-8").read().splitlines()[:2]==["# v0.2.16",'# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }']
