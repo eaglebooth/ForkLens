@@ -16,7 +16,7 @@ def boot(deploy):
  c=deploy("contracts/fork_lens.py");c.register_project(P,DEP,CON,DB,CB);c.open_candidate(C,P,DB,DT,CB,CT,PROD,TEST);return c
 def ai(vm,p,v="COMPATIBLE",issues=None):vm.mock_llm(r"Judge whether consumer",json.dumps({"verdict":v,"issues":issues or [],"summary":"Implementation and regression patches cover the dependency change.","proof_digest":p}));vm.mock_llm(r"Independently validate",'{"valid":true}')
 def test_schema_deployer_neutral(direct_deploy,direct_vm,direct_alice):
- c=direct_deploy("contracts/fork_lens.py");assert json.loads(c.get_contract_version())["version"]==2
+ c=direct_deploy("contracts/fork_lens.py");v=json.loads(c.get_contract_version());assert v["version"]==3 and v["schema"]=="github-authoritative-dependency-gate-v3"
  with direct_vm.prank(direct_alice):c.register_project(P,DEP,CON,DB,CB)
  assert json.loads(c.get_project(P))["owner"].endswith(bytes(direct_alice).hex())
 def test_same_repo_rejected(direct_deploy,direct_vm):

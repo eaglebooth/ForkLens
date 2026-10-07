@@ -25,8 +25,11 @@ The two repositories must not be forks or paths inside this ForkLens repository 
   - head: `5113a6eac492e3d135601b2981f858803d094ae5`
   - required production paths: `src/vault-approval.js`, `package.json`
   - required regression path: `test/vault-approval.test.js`
+  - semantic-conflict head: `8c39cbad349adc8c0971f441a6c0f67d76aacba6`
 
 The consumer head pins the dependency head and contains a GitHub Actions workflow. On 2026-10-07, GitHub's public API reported check `regression` as `completed` / `success`, issued by `github-actions`, with `head_sha` exactly `5113a6eac492e3d135601b2981f858803d094ae5`. This remains revalidated by the contract at assessment time rather than trusted from this statement.
+
+The `semantic-conflict` branch also has an exact-head successful GitHub Actions check, but hard-codes `vault:1` and ignores the requested chain. It exists to prove that changed paths and green CI cannot replace semantic adjudication.
 
 ## Required live scenarios
 

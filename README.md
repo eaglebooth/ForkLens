@@ -1,4 +1,4 @@
-# ForkLens v2
+# ForkLens v3
 
 ForkLens is a GenLayer dependency-upgrade gate. It permits a consumer revision to become active only when authoritative GitHub data proves that an exact dependency upgrade is accompanied by changed production code, changed regression tests, and a successful check run bound to the exact consumer head.
 
@@ -38,4 +38,6 @@ Local tests use mocked GitHub responses only to exercise invariants; they are no
 
 ## Deployment status
 
-ForkLens v2 is not yet deployed. The earlier v1 address and its fixture-derived run were invalidated and must not be submitted. See [`docs/DEPRECATED_V1_EVIDENCE.md`](docs/DEPRECATED_V1_EVIDENCE.md).
+ForkLens v3 requires a fresh deployment. The v2 address `0x207714cED8C00dEEE02ad39B01CF37753216dB0c` is deprecated after live E2E exposed an `UNDETERMINED` validator split. See [`docs/V2_LIVE_DIAGNOSTIC.md`](docs/V2_LIVE_DIAGNOSTIC.md).
+
+The earlier v1 address and its fixture-derived run remain invalid and must not be submitted. See [`docs/DEPRECATED_V1_EVIDENCE.md`](docs/DEPRECATED_V1_EVIDENCE.md).
