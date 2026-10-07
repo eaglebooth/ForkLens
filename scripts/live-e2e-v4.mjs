@@ -4,7 +4,7 @@ import { createAccount, createClient } from "genlayer-js";
 import { studionet } from "genlayer-js/chains";
 
 const CONTRACT = process.argv[2];
-if (!/^0x[0-9a-fA-F]{40}$/.test(CONTRACT || "")) throw new Error("Usage: node scripts/live-e2e-v3.mjs <contract-address> [run-id]");
+if (!/^0x[0-9a-fA-F]{40}$/.test(CONTRACT || "")) throw new Error("Usage: node scripts/live-e2e-v4.mjs <contract-address> [run-id]");
 const run = process.argv[3] || Date.now().toString().slice(-10);
 const project = `vault-${run}`;
 const unavailableProject = `unavailable-${run}`;
@@ -21,7 +21,7 @@ const dependencyBase = "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af";
 const dependencyTarget = "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846";
 const consumerBase = "1f22697154ae777b723b81df4fe043ae95d3a9d6";
 const consumerTarget = "5113a6eac492e3d135601b2981f858803d094ae5";
-const conflictTarget = "8c39cbad349adc8c0971f441a6c0f67d76aacba6";
+const conflictTarget = "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4";
 const productionPaths = "src/vault-approval.js,package.json";
 const testPaths = "test/vault-approval.test.js";
 
@@ -51,7 +51,7 @@ const report = {
   transactions: [], assertions: [], final: {},
 };
 mkdirSync("docs/live-evidence", { recursive: true });
-const path = `docs/live-evidence/studionet-v2-${run}.json`;
+const path = `docs/live-evidence/studionet-v4-${run}.json`;
 const save = () => writeFileSync(path, `${JSON.stringify(report, null, 2)}\n`);
 const check = (condition, label, details = {}) => { report.assertions.push({ label, pass: Boolean(condition), details }); save(); if (!condition) throw new Error(`Assertion failed: ${label}`); };
 const read = async (method, args = []) => JSON.parse(await clientA.readContract({ address: CONTRACT, functionName: method, args }));
@@ -80,7 +80,7 @@ const write = async (label, client, method, args, expected = "SUCCESS") => {
 };
 
 const version = await read("get_contract_version");
-check(version.schema === "github-authoritative-dependency-gate-v3" && version.version === 3, "deployed ForkLens V3 identity", version);
+check(version.schema === "github-authoritative-dependency-gate-v4" && version.version === 4, "deployed ForkLens V4 identity", version);
 await write("wallet A registers authoritative source pair", clientA, "register_project", [project, dependencyRepo, consumerRepo, dependencyBase, consumerBase]);
 await write("wallet A opens happy candidate", clientA, "open_candidate", [ids.happy, project, dependencyBase, dependencyTarget, consumerBase, consumerTarget, productionPaths, testPaths]);
 await write("wallet A opens missing-production candidate", clientA, "open_candidate", [ids.missingProduction, project, dependencyBase, dependencyTarget, consumerBase, consumerTarget, "src/not-present.js", testPaths]);
