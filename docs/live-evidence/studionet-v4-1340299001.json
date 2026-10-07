@@ -1,0 +1,1522 @@
+{
+  "contract": "0xbA4A7b2A758993E1934657CB505dC2a7a97df091",
+  "network": "GenLayer StudioNet 61999",
+  "run": "1340299001",
+  "actors": {
+    "projectOwner": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+    "independentAssessor": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f"
+  },
+  "sources": {
+    "dependencyRepo": "eaglebooth/forklens-dependency",
+    "consumerRepo": "eaglebooth/forklens-consumer",
+    "dependencyBase": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+    "dependencyTarget": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+    "consumerBase": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+    "consumerTarget": "5113a6eac492e3d135601b2981f858803d094ae5",
+    "missingChecksTarget": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+    "conflictTarget": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4"
+  },
+  "transactions": [
+    {
+      "label": "wallet A registers authoritative source pair",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "register_project",
+      "args": [
+        "vault-1340299001",
+        "eaglebooth/forklens-dependency",
+        "eaglebooth/forklens-consumer",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xe58a0e077401b1b2f3314262ae081c8a4cbe6178a82a54e3812b7b37cff48d4d",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated_count": 0,
+          "active_consumer": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "active_dependency": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "consumer_repo": "eaglebooth/forklens-consumer",
+          "dependency_repo": "eaglebooth/forklens-dependency",
+          "epoch": 1,
+          "exists": true,
+          "owner": "0xeb57bc7125fa60d7482ce12058397369ab3581f8",
+          "project_id": "vault-1340299001"
+        }
+      }
+    },
+    {
+      "label": "wallet A opens happy candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.happy",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "5113a6eac492e3d135601b2981f858803d094ae5",
+        "src/vault-approval.js,package.json",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xaf5b73ec1ff4e04fc28103c47b985d29d64b3ee8f24c34cf8481381a694d875b",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "wallet A opens missing-production candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.missing-production",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "5113a6eac492e3d135601b2981f858803d094ae5",
+        "src/not-present.js",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x25473c14653eea0badfdbb878ea92f7e888decbbee307504367b03173766e7b3",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-production",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/not-present.js",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "wallet A opens missing-tests candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.missing-tests",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "5113a6eac492e3d135601b2981f858803d094ae5",
+        "src/vault-approval.js,package.json",
+        "test/not-present.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x8b5c22c2f88c8d9e5f6fcf53eb0f006e4c2cd7835173886e4467e0623f0c8cb1",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-tests",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/not-present.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "wallet A opens missing-checks candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.missing-checks",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "842d09e63591ee09ba9a1f96d8913f37da775fee",
+        "src/vault-approval.js,package.json",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xa720be15a7bf6d663b4e87cfeed116da8b47748b4c2b0353dcb1c0cd13925bcb",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-checks",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "wallet A opens semantic-conflict candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.semantic-conflict",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+        "src/vault-approval.js,package.json",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xb6cab1dbc2eec67a03a407681893903b346d1fbd0adde4034b319a376ee4f66c",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "missing production assessment 1",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.missing-production"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x275ae955adb7997ce2da3b8a2ef6aa7f0850b13f618c56be626061cc41e86ae9",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-production",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/not-present.js",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-production",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+          "production_paths": "src/not-present.js",
+          "project_id": "vault-1340299001",
+          "proof_digest": "e535f56b9e259a621121442e1610cdc3817d62514fbd12dad23ec3c16c6cc932",
+          "status": "BLOCKED",
+          "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "INSUFFICIENT_EVIDENCE"
+        }
+      }
+    },
+    {
+      "label": "missing tests assessment 1",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.missing-tests"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xcfc6f49fc43006ca97c12a8c03e2efc997c656320657a12e5a5f1b3dd89c62c0",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-tests",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/not-present.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-tests",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "46c45e4ebcad3db017d2b8cdf234e971ec37f4aa860d4fd01aaf5f13b47cc1e1",
+          "status": "BLOCKED",
+          "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+          "test_paths": "test/not-present.test.js",
+          "verdict": "INSUFFICIENT_EVIDENCE"
+        }
+      }
+    },
+    {
+      "label": "missing checks assessment 1",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.missing-checks"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x260fccdd479311ad8fd4cc880187803324c012006610c2b29484bd02412eb107",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-checks",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.missing-checks",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "af1aa744e94991b3d065db770fa47072c9f756d485a40bb92aceb892cdaf747b",
+          "status": "BLOCKED",
+          "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "INSUFFICIENT_EVIDENCE"
+        }
+      }
+    },
+    {
+      "label": "semantic conflict assessment 1",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.semantic-conflict"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xa517532d224a3c1a73e8ae9afea66176b58d7553c37687930b02d0af796deb99",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "GITHUB_PROVENANCE_UNRESOLVED",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "1e9358c895a1bc0cec0a237cacb8c9f1b9e63e464bf5460079b613db57bf6e71",
+          "status": "BLOCKED",
+          "summary": "GitHub-controlled commit comparison could not be established.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "SOURCE_UNAVAILABLE"
+        }
+      }
+    },
+    {
+      "label": "semantic conflict opens source retry 2",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "vault-1340299001.semantic-conflict-retry-2",
+        "vault-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+        "src/vault-approval.js,package.json",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x4a31a205a7be66446346449ef46b4d6e20451a87379e526263f7bfa5d35bde80",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict-retry-2",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "semantic conflict assessment 2",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.semantic-conflict-retry-2"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xc03a4a5a758629278f0643a8a74855bdf9bb0c3895f08bfad73670f1191b35a6",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict-retry-2",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.semantic-conflict-retry-2",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "MALFORMED_REVIEW",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "37ff48cc45f1e31325517d1d75b4087c7eeab2394939318fde37634d633278f3",
+          "status": "BLOCKED",
+          "summary": "Semantic compatibility was not established.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "INSUFFICIENT_EVIDENCE"
+        }
+      }
+    },
+    {
+      "label": "wallet A registers unavailable source project",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "register_project",
+      "args": [
+        "unavailable-1340299001",
+        "eaglebooth/repository-that-does-not-exist",
+        "eaglebooth/forklens-consumer",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xb082a1317c599cefc0fdb0a9ebe30b5f1dace6693b5c74f1d07fd84917ab9a88",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated_count": 0,
+          "active_consumer": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "active_dependency": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "consumer_repo": "eaglebooth/forklens-consumer",
+          "dependency_repo": "eaglebooth/repository-that-does-not-exist",
+          "epoch": 1,
+          "exists": true,
+          "owner": "0xeb57bc7125fa60d7482ce12058397369ab3581f8",
+          "project_id": "unavailable-1340299001"
+        }
+      }
+    },
+    {
+      "label": "wallet A opens unavailable source candidate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "open_candidate",
+      "args": [
+        "unavailable-1340299001.source-down",
+        "unavailable-1340299001",
+        "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "5113a6eac492e3d135601b2981f858803d094ae5",
+        "src/vault-approval.js,package.json",
+        "test/vault-approval.test.js"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x5dc9343e9f2c5d6235ba38fd42a2921de15e4e936957e4d2905a4a74d56c7877",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "exists": false
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "unavailable-1340299001.source-down",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "unavailable-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        }
+      }
+    },
+    {
+      "label": "wallet B assesses unavailable source",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "unavailable-1340299001.source-down"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x22d6bc768b2252e9d8e0001958c080e553663d21a78e77f2c7967b7846668950",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "unavailable-1340299001.source-down",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "unavailable-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "unavailable-1340299001.source-down",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "GITHUB_PROVENANCE_UNRESOLVED",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "unavailable-1340299001",
+          "proof_digest": "97e59b2b93b7a950ffc8f9e5382304d3205e871a947971b38c1a1ebbba5ae067",
+          "status": "BLOCKED",
+          "summary": "GitHub-controlled commit comparison could not be established.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "SOURCE_UNAVAILABLE"
+        }
+      }
+    },
+    {
+      "label": "happy candidate assessment 1",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "assess_candidate",
+      "args": [
+        "vault-1340299001.happy"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0x5bcb76c1e77dc38a55062e931ba41abcc4b678c23ec18a4d4b677eb3bf4dd07f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "",
+          "status": "SEALED",
+          "summary": "",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": ""
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        }
+      }
+    },
+    {
+      "label": "wallet B cannot activate owner candidate",
+      "caller": "0x2da5393d7BBb9A037dc3abB56DbbC5C150fc843f",
+      "method": "activate_candidate",
+      "args": [
+        "vault-1340299001.happy",
+        "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2"
+      ],
+      "expected": "ERROR",
+      "hash": "0x46bf0503f2fc2e0855dca086af138f257a0aae921b29a9ccf6e84aaff619a700",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        }
+      }
+    },
+    {
+      "label": "wrong digest cannot activate",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "activate_candidate",
+      "args": [
+        "vault-1340299001.happy",
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      ],
+      "expected": "ERROR",
+      "hash": "0xfcc50339d19854dfdefa8a5384de8f67ee6eaf6adc2cb21c97cb3eacb08f2e79",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        },
+        "after": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        }
+      }
+    },
+    {
+      "label": "wallet A activates exact attestation",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "activate_candidate",
+      "args": [
+        "vault-1340299001.happy",
+        "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2"
+      ],
+      "expected": "SUCCESS",
+      "hash": "0xfa74c2487408a410c3694e279ba9b7ec742fe8e9dd94455eb8891d91287394b5",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "readback": {
+        "before": {
+          "activated": false,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ATTESTED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        },
+        "after": {
+          "activated": true,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ACTIVATED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        }
+      }
+    },
+    {
+      "label": "activation replay is rejected",
+      "caller": "0xeb57bc7125fa60d7482CE12058397369AB3581f8",
+      "method": "activate_candidate",
+      "args": [
+        "vault-1340299001.happy",
+        "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2"
+      ],
+      "expected": "ERROR",
+      "hash": "0xdd1843b690c6a35d014fab8cf618b2d6881cf38840d4aee224bd2b71528988da",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "readback": {
+        "before": {
+          "activated": true,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ACTIVATED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        },
+        "after": {
+          "activated": true,
+          "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+          "candidate_id": "vault-1340299001.happy",
+          "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+          "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+          "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "epoch": 1,
+          "exists": true,
+          "issues": "",
+          "production_paths": "src/vault-approval.js,package.json",
+          "project_id": "vault-1340299001",
+          "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+          "status": "ACTIVATED",
+          "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+          "test_paths": "test/vault-approval.test.js",
+          "verdict": "COMPATIBLE"
+        }
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "label": "deployed ForkLens V4 identity",
+      "pass": true,
+      "details": {
+        "name": "ForkLens",
+        "schema": "github-authoritative-dependency-gate-v4",
+        "version": 4
+      }
+    },
+    {
+      "label": "wallet A registers authoritative source pair finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xe58a0e077401b1b2f3314262ae081c8a4cbe6178a82a54e3812b7b37cff48d4d",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens happy candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xaf5b73ec1ff4e04fc28103c47b985d29d64b3ee8f24c34cf8481381a694d875b",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens missing-production candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x25473c14653eea0badfdbb878ea92f7e888decbbee307504367b03173766e7b3",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens missing-tests candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x8b5c22c2f88c8d9e5f6fcf53eb0f006e4c2cd7835173886e4467e0623f0c8cb1",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens missing-checks candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xa720be15a7bf6d663b4e87cfeed116da8b47748b4c2b0353dcb1c0cd13925bcb",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens semantic-conflict candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xb6cab1dbc2eec67a03a407681893903b346d1fbd0adde4034b319a376ee4f66c",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "missing production assessment 1 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x275ae955adb7997ce2da3b8a2ef6aa7f0850b13f618c56be626061cc41e86ae9",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "missing production path blocks without attestation",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "vault-1340299001.missing-production",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+        "production_paths": "src/not-present.js",
+        "project_id": "vault-1340299001",
+        "proof_digest": "e535f56b9e259a621121442e1610cdc3817d62514fbd12dad23ec3c16c6cc932",
+        "status": "BLOCKED",
+        "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    {
+      "label": "missing tests assessment 1 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xcfc6f49fc43006ca97c12a8c03e2efc997c656320657a12e5a5f1b3dd89c62c0",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "missing regression path blocks without attestation",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "vault-1340299001.missing-tests",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "46c45e4ebcad3db017d2b8cdf234e971ec37f4aa860d4fd01aaf5f13b47cc1e1",
+        "status": "BLOCKED",
+        "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+        "test_paths": "test/not-present.test.js",
+        "verdict": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    {
+      "label": "missing checks assessment 1 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x260fccdd479311ad8fd4cc880187803324c012006610c2b29484bd02412eb107",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "absent exact-head check blocks without attestation",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "vault-1340299001.missing-checks",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "af1aa744e94991b3d065db770fa47072c9f756d485a40bb92aceb892cdaf747b",
+        "status": "BLOCKED",
+        "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    {
+      "label": "semantic conflict assessment 1 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xa517532d224a3c1a73e8ae9afea66176b58d7553c37687930b02d0af796deb99",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "semantic conflict transient source outage fails closed",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "vault-1340299001.semantic-conflict",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "GITHUB_PROVENANCE_UNRESOLVED",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "1e9358c895a1bc0cec0a237cacb8c9f1b9e63e464bf5460079b613db57bf6e71",
+        "status": "BLOCKED",
+        "summary": "GitHub-controlled commit comparison could not be established.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "SOURCE_UNAVAILABLE"
+      }
+    },
+    {
+      "label": "semantic conflict opens source retry 2 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x4a31a205a7be66446346449ef46b4d6e20451a87379e526263f7bfa5d35bde80",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "semantic conflict assessment 2 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xc03a4a5a758629278f0643a8a74855bdf9bb0c3895f08bfad73670f1191b35a6",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "semantic conflict blocks despite changed paths and green CI",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "vault-1340299001.semantic-conflict-retry-2",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "MALFORMED_REVIEW",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "37ff48cc45f1e31325517d1d75b4087c7eeab2394939318fde37634d633278f3",
+        "status": "BLOCKED",
+        "summary": "Semantic compatibility was not established.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    {
+      "label": "wallet A registers unavailable source project finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xb082a1317c599cefc0fdb0a9ebe30b5f1dace6693b5c74f1d07fd84917ab9a88",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet A opens unavailable source candidate finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x5dc9343e9f2c5d6235ba38fd42a2921de15e4e936957e4d2905a4a74d56c7877",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "wallet B assesses unavailable source finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x22d6bc768b2252e9d8e0001958c080e553663d21a78e77f2c7967b7846668950",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "unavailable authoritative source fails closed",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "",
+        "candidate_id": "unavailable-1340299001.source-down",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "GITHUB_PROVENANCE_UNRESOLVED",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "unavailable-1340299001",
+        "proof_digest": "97e59b2b93b7a950ffc8f9e5382304d3205e871a947971b38c1a1ebbba5ae067",
+        "status": "BLOCKED",
+        "summary": "GitHub-controlled commit comparison could not be established.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "SOURCE_UNAVAILABLE"
+      }
+    },
+    {
+      "label": "happy candidate assessment 1 finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0x5bcb76c1e77dc38a55062e931ba41abcc4b678c23ec18a4d4b677eb3bf4dd07f",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "authoritative compatible candidate receives exact attestation",
+      "pass": true,
+      "details": {
+        "activated": false,
+        "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+        "candidate_id": "vault-1340299001.happy",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+        "status": "ATTESTED",
+        "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "COMPATIBLE"
+      }
+    },
+    {
+      "label": "wallet B cannot activate owner candidate finalized with ERROR",
+      "pass": true,
+      "details": {
+        "hash": "0x46bf0503f2fc2e0855dca086af138f257a0aae921b29a9ccf6e84aaff619a700",
+        "status": "FINALIZED",
+        "execution": "ERROR"
+      }
+    },
+    {
+      "label": "wrong actor preserves candidate state",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "label": "wrong digest cannot activate finalized with ERROR",
+      "pass": true,
+      "details": {
+        "hash": "0xfcc50339d19854dfdefa8a5384de8f67ee6eaf6adc2cb21c97cb3eacb08f2e79",
+        "status": "FINALIZED",
+        "execution": "ERROR"
+      }
+    },
+    {
+      "label": "wrong digest preserves candidate state",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "label": "wallet A activates exact attestation finalized with SUCCESS",
+      "pass": true,
+      "details": {
+        "hash": "0xfa74c2487408a410c3694e279ba9b7ec742fe8e9dd94455eb8891d91287394b5",
+        "status": "FINALIZED",
+        "execution": "SUCCESS"
+      }
+    },
+    {
+      "label": "exact attestation activates once",
+      "pass": true,
+      "details": {
+        "activated": true,
+        "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+        "candidate_id": "vault-1340299001.happy",
+        "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+        "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+        "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+        "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+        "epoch": 1,
+        "exists": true,
+        "issues": "",
+        "production_paths": "src/vault-approval.js,package.json",
+        "project_id": "vault-1340299001",
+        "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+        "status": "ACTIVATED",
+        "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+        "test_paths": "test/vault-approval.test.js",
+        "verdict": "COMPATIBLE"
+      }
+    },
+    {
+      "label": "activation replay is rejected finalized with ERROR",
+      "pass": true,
+      "details": {
+        "hash": "0xdd1843b690c6a35d014fab8cf618b2d6881cf38840d4aee224bd2b71528988da",
+        "status": "FINALIZED",
+        "execution": "ERROR"
+      }
+    },
+    {
+      "label": "replay preserves activated state",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "label": "project revision and counters match finalized activation",
+      "pass": true,
+      "details": {
+        "mainProject": {
+          "activated_count": 1,
+          "active_consumer": "5113a6eac492e3d135601b2981f858803d094ae5",
+          "active_dependency": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+          "consumer_repo": "eaglebooth/forklens-consumer",
+          "dependency_repo": "eaglebooth/forklens-dependency",
+          "epoch": 2,
+          "exists": true,
+          "owner": "0xeb57bc7125fa60d7482ce12058397369ab3581f8",
+          "project_id": "vault-1340299001"
+        },
+        "stats": {
+          "candidates": 22,
+          "open_attestations": 0,
+          "projects": 5
+        }
+      }
+    }
+  ],
+  "final": {
+    "version": {
+      "name": "ForkLens",
+      "schema": "github-authoritative-dependency-gate-v4",
+      "version": 4
+    },
+    "happy": {
+      "activated": true,
+      "attestation_digest": "51571f28f3bcf359f4ebc78f8002d124bd426ec5c1cda154fc17ad8c4a44e2f2",
+      "candidate_id": "vault-1340299001.happy",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "",
+      "production_paths": "src/vault-approval.js,package.json",
+      "project_id": "vault-1340299001",
+      "proof_digest": "b3eb23f57a921a5930d92c61a304a48e20594e711b3ce6e3f82d9edf272b9ca4",
+      "status": "ACTIVATED",
+      "summary": "Consumer patches correctly migrate to the v2 domain-bound API. The new required 'protocol' and 'chainId' parameters are propagated from caller input through the consumer's public API (createApproval) and validated. Regression tests include negative assertions that verify the new domain-binding invariant (signatures are chain-specific and cannot be replayed). The consumer does not hard-code values, ignore inputs, or weaken verification.",
+      "test_paths": "test/vault-approval.test.js",
+      "verdict": "COMPATIBLE"
+    },
+    "missingProduction": {
+      "activated": false,
+      "attestation_digest": "",
+      "candidate_id": "vault-1340299001.missing-production",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+      "production_paths": "src/not-present.js",
+      "project_id": "vault-1340299001",
+      "proof_digest": "e535f56b9e259a621121442e1610cdc3817d62514fbd12dad23ec3c16c6cc932",
+      "status": "BLOCKED",
+      "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+      "test_paths": "test/vault-approval.test.js",
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    },
+    "missingTests": {
+      "activated": false,
+      "attestation_digest": "",
+      "candidate_id": "vault-1340299001.missing-tests",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+      "production_paths": "src/vault-approval.js,package.json",
+      "project_id": "vault-1340299001",
+      "proof_digest": "46c45e4ebcad3db017d2b8cdf234e971ec37f4aa860d4fd01aaf5f13b47cc1e1",
+      "status": "BLOCKED",
+      "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+      "test_paths": "test/not-present.test.js",
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    },
+    "missingChecks": {
+      "activated": false,
+      "attestation_digest": "",
+      "candidate_id": "vault-1340299001.missing-checks",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "842d09e63591ee09ba9a1f96d8913f37da775fee",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "AUTHORITATIVE_BEHAVIORAL_PROOF_MISSING",
+      "production_paths": "src/vault-approval.js,package.json",
+      "project_id": "vault-1340299001",
+      "proof_digest": "af1aa744e94991b3d065db770fa47072c9f756d485a40bb92aceb892cdaf747b",
+      "status": "BLOCKED",
+      "summary": "Production paths, regression paths, and successful exact-head GitHub checks were not all established.",
+      "test_paths": "test/vault-approval.test.js",
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    },
+    "conflict": {
+      "activated": false,
+      "attestation_digest": "",
+      "candidate_id": "vault-1340299001.semantic-conflict-retry-2",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "MALFORMED_REVIEW",
+      "production_paths": "src/vault-approval.js,package.json",
+      "project_id": "vault-1340299001",
+      "proof_digest": "37ff48cc45f1e31325517d1d75b4087c7eeab2394939318fde37634d633278f3",
+      "status": "BLOCKED",
+      "summary": "Semantic compatibility was not established.",
+      "test_paths": "test/vault-approval.test.js",
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    },
+    "unavailable": {
+      "activated": false,
+      "attestation_digest": "",
+      "candidate_id": "unavailable-1340299001.source-down",
+      "consumer_base": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "consumer_target": "5113a6eac492e3d135601b2981f858803d094ae5",
+      "dependency_base": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "dependency_target": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "epoch": 1,
+      "exists": true,
+      "issues": "GITHUB_PROVENANCE_UNRESOLVED",
+      "production_paths": "src/vault-approval.js,package.json",
+      "project_id": "unavailable-1340299001",
+      "proof_digest": "97e59b2b93b7a950ffc8f9e5382304d3205e871a947971b38c1a1ebbba5ae067",
+      "status": "BLOCKED",
+      "summary": "GitHub-controlled commit comparison could not be established.",
+      "test_paths": "test/vault-approval.test.js",
+      "verdict": "SOURCE_UNAVAILABLE"
+    },
+    "mainProject": {
+      "activated_count": 1,
+      "active_consumer": "5113a6eac492e3d135601b2981f858803d094ae5",
+      "active_dependency": "59e9de2b40b74f287c0ad9cf2d1ccebf3b74b846",
+      "consumer_repo": "eaglebooth/forklens-consumer",
+      "dependency_repo": "eaglebooth/forklens-dependency",
+      "epoch": 2,
+      "exists": true,
+      "owner": "0xeb57bc7125fa60d7482ce12058397369ab3581f8",
+      "project_id": "vault-1340299001"
+    },
+    "unavailableProject": {
+      "activated_count": 0,
+      "active_consumer": "1f22697154ae777b723b81df4fe043ae95d3a9d6",
+      "active_dependency": "6cc2c3bf8aad0c0c23515e9ac01530c0d08243af",
+      "consumer_repo": "eaglebooth/forklens-consumer",
+      "dependency_repo": "eaglebooth/repository-that-does-not-exist",
+      "epoch": 1,
+      "exists": true,
+      "owner": "0xeb57bc7125fa60d7482ce12058397369ab3581f8",
+      "project_id": "unavailable-1340299001"
+    },
+    "stats": {
+      "candidates": 22,
+      "open_attestations": 0,
+      "projects": 5
+    }
+  }
+}

@@ -36,8 +36,12 @@ npm run build
 
 Local tests use mocked GitHub responses only to exercise invariants; they are not submission evidence. Valid live evidence requires two independently hosted public repositories, real changed production/test files, and a real successful GitHub check on the exact consumer head. See [`docs/TEST_RESOURCE_MANIFEST.md`](docs/TEST_RESOURCE_MANIFEST.md).
 
-## Deployment status
+## StudioNet deployment
 
-ForkLens v4 requires a fresh deployment. V2 is deprecated after an `UNDETERMINED` validator split; V3 is deprecated after an adversarial hard-coded-domain patch received a false-positive attestation. See [`docs/V2_LIVE_DIAGNOSTIC.md`](docs/V2_LIVE_DIAGNOSTIC.md) and [`docs/V3_LIVE_DIAGNOSTIC.md`](docs/V3_LIVE_DIAGNOSTIC.md).
+ForkLens v4 is deployed at [`0xbA4A7b2A758993E1934657CB505dC2a7a97df091`](https://explorer-studio.genlayer.com/address/0xbA4A7b2A758993E1934657CB505dC2a7a97df091). Direct readback confirms schema `github-authoritative-dependency-gate-v4`, version `4`.
+
+The finalized two-wallet run is recorded in [`docs/live-evidence/studionet-v4-1340299001.json`](docs/live-evidence/studionet-v4-1340299001.json): 20 transactions, 33 passing assertions, and zero failed assertions. Every transaction includes caller, exact arguments, finality, execution result, and authoritative before/after readback. It covers authoritative happy-path activation; missing production, regression, and exact-head checks; source outage; adversarial verification bypass; wrong actor; wrong digest; replay; final counters; and exact readback. Transient GitHub source failures were recorded separately and failed closed; scenario-specific claims passed only after authoritative source retrieval succeeded.
+
+V2 and V3 remain deprecated for the documented reasons. See [`docs/V2_LIVE_DIAGNOSTIC.md`](docs/V2_LIVE_DIAGNOSTIC.md) and [`docs/V3_LIVE_DIAGNOSTIC.md`](docs/V3_LIVE_DIAGNOSTIC.md).
 
 The earlier v1 address and its fixture-derived run remain invalid and must not be submitted. See [`docs/DEPRECATED_V1_EVIDENCE.md`](docs/DEPRECATED_V1_EVIDENCE.md).

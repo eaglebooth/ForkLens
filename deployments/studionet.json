@@ -1,0 +1,9 @@
+{
+  "network": "GenLayer StudioNet",
+  "chainId": 61999,
+  "contract": "0xbA4A7b2A758993E1934657CB505dC2a7a97df091",
+  "schema": "github-authoritative-dependency-gate-v4",
+  "version": 4,
+  "verifiedByReadback": true,
+  "evidence": "docs/live-evidence/studionet-v4-1340299001.json"
+}

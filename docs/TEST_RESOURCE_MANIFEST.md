@@ -25,6 +25,7 @@ The two repositories must not be forks or paths inside this ForkLens repository 
   - head: `5113a6eac492e3d135601b2981f858803d094ae5`
   - required production paths: `src/vault-approval.js`, `package.json`
   - required regression path: `test/vault-approval.test.js`
+  - missing-check head: `842d09e63591ee09ba9a1f96d8913f37da775fee` (`failed-check` branch; public API reports zero exact-head check-runs)
   - semantic-conflict head: `44d9f604b202661a5dd8cbf3554df2dcf8dd9ab4`
 
 The consumer head pins the dependency head and contains a GitHub Actions workflow. On 2026-10-07, GitHub's public API reported check `regression` as `completed` / `success`, issued by `github-actions`, with `head_sha` exactly `5113a6eac492e3d135601b2981f858803d094ae5`. This remains revalidated by the contract at assessment time rather than trusted from this statement.
